@@ -22,7 +22,7 @@ function PasswordGenerator() {
   }
 
   return (
-    <div>
+    <div className="p-4 bg-white rounded-lg min-w-xs">
       <h2>Password Generator</h2>
       <div>
         <span>{password}</span>

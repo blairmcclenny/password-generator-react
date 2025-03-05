@@ -1,8 +1,11 @@
-import "./App.css"
 import PasswordGenerator from "./password-generator"
 
 function App() {
-  return <PasswordGenerator />
+  return (
+    <div className="flex h-screen w-screen justify-center items-center p-4 bg-gray-100">
+      <PasswordGenerator />
+    </div>
+  )
 }
 
 export default App
