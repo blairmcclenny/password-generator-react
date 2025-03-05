@@ -3,6 +3,7 @@ import generatePassword from "./generate-password"
 import { Button } from "@/components/ui/button"
 import { Slider } from "@/components/ui/slider"
 import { Checkbox } from "@/components/ui/checkbox"
+import { Copy } from "lucide-react"
 
 function PasswordGenerator() {
   const [password, setPassword] = useState("")
@@ -31,7 +32,9 @@ function PasswordGenerator() {
       </h2>
       <div>
         <span>{password}</span>
-        <button></button>
+        <Button variant={"ghost"}>
+          <Copy strokeWidth={1} />
+        </Button>
       </div>
       <form onSubmit={handleSubmit}>
         <div>
