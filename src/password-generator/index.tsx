@@ -1,5 +1,8 @@
 import { FormEvent, useState } from "react"
 import generatePassword from "./generate-password"
+import { Button } from "@/components/ui/button"
+import { Slider } from "@/components/ui/slider"
+import { Checkbox } from "@/components/ui/checkbox"
 
 function PasswordGenerator() {
   const [password, setPassword] = useState("")
@@ -23,7 +26,9 @@ function PasswordGenerator() {
 
   return (
     <div className="p-4 bg-white rounded-lg min-w-xs">
-      <h2>Password Generator</h2>
+      <h2 className="mt-10 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
+        Password Generator
+      </h2>
       <div>
         <span>{password}</span>
         <button></button>
@@ -33,52 +38,32 @@ function PasswordGenerator() {
           <label htmlFor="length">
             Password length <span>16</span>
           </label>
-          <input
-            type="range"
+          <Slider
             id="length"
             name="length"
-            min="8"
-            max="32"
-            defaultValue={16}
+            min={8}
+            max={32}
+            defaultValue={[16]}
+            step={1}
           />
         </div>
         <div>
           <label htmlFor="uppercase">Include Uppercase Letters</label>
-          <input
-            type="checkbox"
-            id="uppercase"
-            name="uppercase"
-            defaultChecked={true}
-          />
+          <Checkbox id="uppercase" name="uppercase" defaultChecked={true} />
         </div>
         <div>
           <label htmlFor="lowercase">Include Lowercase Letters</label>
-          <input
-            type="checkbox"
-            id="lowercase"
-            name="lowercase"
-            defaultChecked={true}
-          />
+          <Checkbox id="lowercase" name="lowercase" defaultChecked={true} />
         </div>
         <div>
           <label htmlFor="numbers">Include Numbers</label>
-          <input
-            type="checkbox"
-            id="numbers"
-            name="numbers"
-            defaultChecked={true}
-          />
+          <Checkbox id="numbers" name="numbers" defaultChecked={true} />
         </div>
         <div>
           <label htmlFor="symbols">Include Symbols</label>
-          <input
-            type="checkbox"
-            id="symbols"
-            name="symbols"
-            defaultChecked={true}
-          />
+          <Checkbox id="symbols" name="symbols" defaultChecked={true} />
         </div>
-        <button type="submit">Generate Password</button>
+        <Button type="submit">Generate Password</Button>
       </form>
     </div>
   )
