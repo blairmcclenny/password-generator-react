@@ -16,6 +16,7 @@ import {
 
 function PasswordGenerator() {
   const [password, setPassword] = useState("")
+  const [length, setLength] = useState([16])
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -29,7 +30,7 @@ function PasswordGenerator() {
         formData.has("uppercase"),
         formData.has("numbers"),
         formData.has("symbols"),
-        Number(formData.get("length"))
+        Number(formData.get("password-length"))
       )
     )
   }
@@ -50,7 +51,7 @@ function PasswordGenerator() {
         </CardTitle>
         <CardDescription>Generate a Secure Password</CardDescription>
         <div className="flex gap-2 justify-between mt-4">
-          <Input value={password} readOnly />
+          <Input name="password" value={password} readOnly />
           <Button variant="secondary" onClick={handleCopyClick}>
             <Copy strokeWidth={1} />
           </Button>
@@ -63,26 +64,23 @@ function PasswordGenerator() {
           className="space-y-2"
         >
           <div className="space-y-3 mb-6">
-            <label
-              htmlFor="length"
-              className="flex items-center justify-between"
-            >
+            <div className="flex items-center justify-between">
               <span>Length</span>
               <Input
-                type="number"
-                name="length"
-                defaultValue={16}
-                min={8}
-                max={32}
-                className="w-fit"
+                readOnly
+                name="password-length-display"
+                value={length[0].toString()}
+                size={2}
+                className="w-fit pointer-events-none"
               />
-            </label>
+            </div>
             <Slider
-              id="length"
-              name="length"
+              id="password-length"
+              name="password-length"
               min={8}
               max={32}
-              defaultValue={[16]}
+              value={length}
+              onValueChange={(value) => setLength(value)}
               step={1}
             />
           </div>
