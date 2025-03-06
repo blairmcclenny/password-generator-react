@@ -4,6 +4,15 @@ import { Button } from "@/components/ui/button"
 import { Slider } from "@/components/ui/slider"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Copy } from "lucide-react"
+import { Input } from "@/components/ui/input"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 
 function PasswordGenerator() {
   const [password, setPassword] = useState("")
@@ -25,50 +34,82 @@ function PasswordGenerator() {
     )
   }
 
+  const handleCopyClick = async () => {
+    try {
+      await navigator.clipboard.writeText(password)
+    } catch (err) {
+      console.error("Failed to copy text: ", err)
+    }
+  }
+
   return (
-    <div className="p-4 bg-white rounded-lg min-w-xs">
-      <h2 className="mt-10 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
-        Password Generator
-      </h2>
-      <div>
-        <span>{password}</span>
-        <Button variant={"ghost"}>
-          <Copy strokeWidth={1} />
+    <Card className="w-96">
+      <CardHeader>
+        <CardTitle className="text-2xl tracking-tight">
+          Password Generator
+        </CardTitle>
+        <CardDescription>Generate a Secure Password</CardDescription>
+        <div className="flex gap-2 justify-between mt-4">
+          <Input value={password} readOnly />
+          <Button variant="secondary" onClick={handleCopyClick}>
+            <Copy strokeWidth={1} />
+          </Button>
+        </div>
+      </CardHeader>
+      <CardContent>
+        <form
+          onSubmit={handleSubmit}
+          id="password-settings"
+          className="space-y-2"
+        >
+          <div className="space-y-3 mb-6">
+            <label
+              htmlFor="length"
+              className="flex items-center justify-between"
+            >
+              <span>Length</span>
+              <Input
+                type="number"
+                name="length"
+                defaultValue={16}
+                min={8}
+                max={32}
+                className="w-fit"
+              />
+            </label>
+            <Slider
+              id="length"
+              name="length"
+              min={8}
+              max={32}
+              defaultValue={[16]}
+              step={1}
+            />
+          </div>
+          <div className="flex justify-between">
+            <label htmlFor="uppercase">Uppercase Letters</label>
+            <Checkbox id="uppercase" name="uppercase" defaultChecked={true} />
+          </div>
+          <div className="flex justify-between">
+            <label htmlFor="lowercase">Lowercase Letters</label>
+            <Checkbox id="lowercase" name="lowercase" defaultChecked={true} />
+          </div>
+          <div className="flex justify-between">
+            <label htmlFor="numbers">Numbers</label>
+            <Checkbox id="numbers" name="numbers" defaultChecked={true} />
+          </div>
+          <div className="flex justify-between">
+            <label htmlFor="symbols">Symbols</label>
+            <Checkbox id="symbols" name="symbols" defaultChecked={true} />
+          </div>
+        </form>
+      </CardContent>
+      <CardFooter>
+        <Button type="submit" form="password-settings" className="w-full">
+          Generate Password
         </Button>
-      </div>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="length">
-            Password length <span>16</span>
-          </label>
-          <Slider
-            id="length"
-            name="length"
-            min={8}
-            max={32}
-            defaultValue={[16]}
-            step={1}
-          />
-        </div>
-        <div>
-          <label htmlFor="uppercase">Include Uppercase Letters</label>
-          <Checkbox id="uppercase" name="uppercase" defaultChecked={true} />
-        </div>
-        <div>
-          <label htmlFor="lowercase">Include Lowercase Letters</label>
-          <Checkbox id="lowercase" name="lowercase" defaultChecked={true} />
-        </div>
-        <div>
-          <label htmlFor="numbers">Include Numbers</label>
-          <Checkbox id="numbers" name="numbers" defaultChecked={true} />
-        </div>
-        <div>
-          <label htmlFor="symbols">Include Symbols</label>
-          <Checkbox id="symbols" name="symbols" defaultChecked={true} />
-        </div>
-        <Button type="submit">Generate Password</Button>
-      </form>
-    </div>
+      </CardFooter>
+    </Card>
   )
 }
 
